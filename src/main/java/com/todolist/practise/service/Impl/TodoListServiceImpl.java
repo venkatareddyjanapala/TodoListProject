@@ -5,7 +5,6 @@ import com.todolist.practise.models.Task;
 import com.todolist.practise.repository.TaskRepository;
 import com.todolist.practise.service.TodoListService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
