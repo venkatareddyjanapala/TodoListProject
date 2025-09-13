@@ -2,13 +2,13 @@ package com.todolist.practise.service.Impl;
 
 import com.todolist.practise.dto.CreateToDoList;
 import com.todolist.practise.dto.ToDoResponse;
-import com.todolist.practise.enums.Status;
 import com.todolist.practise.models.Task;
 import com.todolist.practise.repository.TaskRepository;
 import com.todolist.practise.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 public class TodoListServiceImpl implements TodoListService {
     private final TaskRepository taskRepository;
     @Override
-    public void createList(CreateToDoList request) {
+    public Mono<String> createList(CreateToDoList request) {
         log.info("The given request object is:" + request.toString());
         Task task = Task.builder()
                 .taskName(request.taskName())
@@ -29,6 +29,7 @@ public class TodoListServiceImpl implements TodoListService {
                 .build();
 
         taskRepository.save(task);
+        return Mono.just(task.getId().toString());
     }
 
     @Override
