@@ -2,6 +2,7 @@ package com.todolist.practise.service.Impl;
 
 import com.todolist.practise.dto.CreateToDoList;
 import com.todolist.practise.dto.ToDoResponse;
+import com.todolist.practise.enums.Status;
 import com.todolist.practise.models.Task;
 import com.todolist.practise.repository.TaskRepository;
 import com.todolist.practise.service.TodoListService;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,19 @@ public class TodoListServiceImpl implements TodoListService {
 
         taskRepository.save(task);
         return Mono.just(task.getId().toString());
+    }
+
+    @Override
+    public void updateList(String taskName, Status status) {
+        Task task = taskRepository.findByTaskName(taskName);
+        task.setStatus(status);
+       taskRepository.save(task);
+    }
+
+    @Override
+    public void deleteList(String taskName) {
+        Task task = taskRepository.findByTaskName(taskName);
+        taskRepository.delete(task);
     }
 
     @Override
